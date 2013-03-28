@@ -9,22 +9,19 @@ function init() {
 	map = new esri.Map("map", {
 		basemap : "gray",
 		center : [-98.58, 39.83],
-		zoom : 5,
-		sliderStyle : "small"
+		zoom : 5
 	});
 	redFillSymbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([127, 31, 31]), 2), new dojo.Color([255, 127, 127, 0.4]));
 	grayFillSymbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([127, 127, 127]), 2), new dojo.Color([127, 127, 127, 0.4]));
-	dojo.connect(map, "onClick", getState);
-}
-
-function getState(mapOnClickEvent) {
-	var stateQuery = new esri.tasks.Query();
-	stateQuery.geometry = mapOnClickEvent.mapPoint;
-	stateQuery.returnGeometry = true;
-	stateQuery.outFields = ["ST_ABBREV", "NAME"];
-	var stateQueryTask = new esri.tasks.QueryTask("http://services.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_1990-2000_Population_Change/MapServer/4");
-	dojo.byId("nextGenerationButton").innerHTML = "Selecting state...";
-	stateQueryTask.execute(stateQuery, stateQueryTaskOnComplete);
+	dojo.connect(map, "onClick", function getState(mapOnClickEvent) {
+		var stateQuery = new esri.tasks.Query();
+		stateQuery.geometry = mapOnClickEvent.mapPoint;
+		stateQuery.returnGeometry = true;
+		stateQuery.outFields = ["ST_ABBREV", "NAME"];
+		var stateQueryTask = new esri.tasks.QueryTask("http://services.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_1990-2000_Population_Change/MapServer/4");
+		dojo.byId("nextGenerationButton").innerHTML = "Selecting state...";
+		stateQueryTask.execute(stateQuery, stateQueryTaskOnComplete);
+	});
 }
 
 function stateQueryTaskOnComplete(stateFeatureSet) {
