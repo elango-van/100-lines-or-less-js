@@ -29,16 +29,12 @@ function getState(mapOnClickEvent) {
 }
 
 function stateQueryTaskOnComplete(stateFeatureSet) {
-	if (stateFeatureSet.features.length > 0) {
-		var stateGraphic = stateFeatureSet.features[0];
-		stateGraphic.setSymbol(greenFillSymbol);
-		map.graphics.clear();
-		map.setExtent(stateGraphic.geometry.getExtent().expand(1.4), true);
-		map.graphics.add(stateGraphic);
-		getCountiesForState(stateGraphic);
-	} else {
-		alert("No state found.\nProbably your mouse pointer dive in the Ocean or a Lake, or get lost in Canada.\n\nPlease click on any USA state.");
-	}
+	var stateGraphic = stateFeatureSet.features[0];
+	stateGraphic.setSymbol(greenFillSymbol);
+	map.graphics.clear();
+	map.setExtent(stateGraphic.geometry.getExtent().expand(1.4), true);
+	map.graphics.add(stateGraphic);
+	getCountiesForState(stateGraphic);
 }
 
 function getCountiesForState(stateGraphic) {
@@ -73,20 +69,20 @@ function getNeighbours() {
 		dojo.forEach(map.graphics.graphics, function(potentialNeighbour) {
 			if (primaryCounty.attributes.id != potentialNeighbour.attributes.id) {
 				var extentsIntersection = primaryCounty.geometry.getExtent().intersects(potentialNeighbour.geometry.getExtent());
-				if (extentsIntersection) {
+				if (extentsIntersection)
 					dojo.every(primaryCounty.geometry.rings, function(primaryCountyRing) {
 						return dojo.every(primaryCountyRing, function(vertexXYArray) {
 							var vertex = new esri.geometry.Point(vertexXYArray, map.spatialReference);
-							if (extentsIntersection.contains(vertex)) {
+							if (extentsIntersection.contains(vertex))
 								if (potentialNeighbour.geometry.contains(vertex)) {
 									primaryCounty.attributes.neighbours.push("" + potentialNeighbour.attributes.id);
 									return false;
 								}
-							}
+
 							return true;
 						});
 					});
-				}
+
 			}
 		});
 	});
@@ -94,45 +90,38 @@ function getNeighbours() {
 }
 
 function calculateNextStep() {
-	if (map.graphics.graphics.length > 1) {
-		dojo.forEach(map.graphics.graphics, function(county) {
-			var numberOfActiveNeighBours = getActiveNeighbourCount(county);
-			switch(numberOfActiveNeighBours) {
-				case 2:
-					county.attributes.futureStatus = county.attributes.currentStatus;
-					break;
-				case 3:
-					county.attributes.futureStatus = 1;
-					break;
-				default:
-					county.attributes.futureStatus = 0;
+	dojo.forEach(map.graphics.graphics, function(county) {
+		var numberOfActiveNeighBours = getActiveNeighbourCount(county);
+		switch(numberOfActiveNeighBours) {
+			case 2:
+				county.attributes.futureStatus = county.attributes.currentStatus;
+				break;
+			case 3:
+				county.attributes.futureStatus = 1;
+				break;
+			default:
+				county.attributes.futureStatus = 0;
 
-			}
-		});
-		updateMapGraphics();
-	}
+		}
+	});
+	updateMapGraphics();
 }
 
 function getActiveNeighbourCount(county) {
 	var numberOfActiveNeighbours = 0;
 	dojo.forEach(map.graphics.graphics, function(neighbour) {
-		if (neighbour.attributes.id != county.attributes.id) {
+		if (neighbour.attributes.id != county.attributes.id)
 			if (county.attributes.neighbours.indexOf(neighbour.attributes.id) != -1) {
 				numberOfActiveNeighbours += neighbour.attributes.currentStatus;
 			}
-		}
+
 	});
 	return numberOfActiveNeighbours;
 }
 
 function updateMapGraphics() {
-	var totalLeft = 0;
 	dojo.forEach(map.graphics.graphics, function(county) {
 		county.attributes.currentStatus = county.attributes.futureStatus;
-		if (county.attributes.currentStatus == 1) {
-			totalLeft++;
-		}
 		county.setSymbol((county.attributes.currentStatus == 1) ? redFillSymbol : grayFillSymbol);
 	});
-	dojo.byId("nextGenerationButton").innerHTML = (totalLeft == 0) ? "Click on map to select a new State" : "Click for Next Generation of counties. This generation has " + totalLeft + " of " + map.graphics.graphics.length + " counties.";
 }
