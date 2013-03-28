@@ -10,8 +10,8 @@ Best of luck!
 ![App](https://raw.github.com/Esri/100-lines-or-less-js/master/100-lines-or-less-js.png)
 
 ## Winners
-1. Realtime Collaborative Mapping (Phil Legger)
-2. Bees (Stan McShinsky)
+1. Realtime Collaborative Mapping (Phil Leggetter)
+2. Bees (Stan Mcshinsky)
 3. JavaScript Geotagging (ognian7)
 
 ## View the Current Entries
