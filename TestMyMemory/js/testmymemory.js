@@ -16,9 +16,11 @@ function init(){
  }
 function initFunctionality(newpoints) {
 var e = document.getElementById("WhatToSelect");
-endpoint=e.options[e.selectedIndex].value.split(',')[0];
-lookforattribute=e.options[e.selectedIndex].value.split(',')[1];
-Where=e.options[e.selectedIndex].value.split(',')[2];
+e= e.options[e.selectedIndex].value;
+endpoint=e.split(',')[0];
+lookforattribute=e.split(',')[1];
+Where=e.split(',')[2];
+map.centerAndZoom(eval(e.split(',')[3].replace(':',',')),e.split(',')[4]);
 if ( Where == '') Where = "1=1";
  //build query
  queryTaskQuestions = new esri.tasks.QueryTask(endpoint);
@@ -28,7 +30,7 @@ if ( Where == '') Where = "1=1";
  queryQuestions.where = Where;
  queryQuestions.outFields = [lookforattribute];
  queryTaskQuestions.execute(queryQuestions, showResults);
- start.style.display="none";title.style.display='';
+ start.style.display="none";infospace.style.display='';
  starting = true;
  //build query task
  var queryTask = new esri.tasks.QueryTask(endpoint);
