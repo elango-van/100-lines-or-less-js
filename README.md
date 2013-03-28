@@ -9,6 +9,11 @@ Best of luck!
 
 ![App](https://raw.github.com/Esri/100-lines-or-less-js/master/100-lines-or-less-js.png)
 
+## Winners
+1. Realtime Collaborative Mapping (Phil Legger)
+2. Bees (Stan McShinsky)
+3. JavaScript Geotagging (ognian7)
+
 ## View the Current Entries
 
 1. [Meet Brazil](http://esri.github.com/100-lines-or-less-js/meet_brazil/index.html) by [marcos-fedato](http://github.com/marcos-fedato)
