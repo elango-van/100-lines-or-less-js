@@ -12,7 +12,6 @@ function init() {
 		zoom : 5,
 		sliderStyle : "small"
 	});
-	greenFillSymbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([31, 127, 31]), 2), new dojo.Color([127, 255, 127, 0.4]));
 	redFillSymbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([127, 31, 31]), 2), new dojo.Color([255, 127, 127, 0.4]));
 	grayFillSymbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([127, 127, 127]), 2), new dojo.Color([127, 127, 127, 0.4]));
 	dojo.connect(map, "onClick", getState);
@@ -29,12 +28,8 @@ function getState(mapOnClickEvent) {
 }
 
 function stateQueryTaskOnComplete(stateFeatureSet) {
-	var stateGraphic = stateFeatureSet.features[0];
-	stateGraphic.setSymbol(greenFillSymbol);
-	map.graphics.clear();
-	map.setExtent(stateGraphic.geometry.getExtent().expand(1.4), true);
-	map.graphics.add(stateGraphic);
-	getCountiesForState(stateGraphic);
+	map.setExtent(stateFeatureSet.features[0].geometry.getExtent().expand(1.4), true);
+	getCountiesForState(stateFeatureSet.features[0]);
 }
 
 function getCountiesForState(stateGraphic) {
@@ -51,19 +46,6 @@ function countyQueryTaskOnComplete(countyFeatureSet) {
 	map.graphics.clear();
 	dojo.forEach(countyFeatureSet.features, addCounty);
 	dojo.byId("nextGenerationButton").innerHTML = "Calculating neighbours...";
-	getNeighbours();
-}
-
-function addCounty(countyGraphic) {
-	var initialCountyStatus = Math.round(Math.random());
-	var countyGraphicForMap = new esri.Graphic(countyGraphic.geometry, (initialCountyStatus) ? redFillSymbol : grayFillSymbol, {
-		"id" : countyGraphic.attributes.ID,
-		"currentStatus" : initialCountyStatus
-	});
-	map.graphics.add(countyGraphicForMap);
-}
-
-function getNeighbours() {
 	dojo.forEach(map.graphics.graphics, function(primaryCounty) {
 		primaryCounty.attributes.neighbours = [];
 		dojo.forEach(map.graphics.graphics, function(potentialNeighbour) {
@@ -89,6 +71,15 @@ function getNeighbours() {
 	dojo.byId("nextGenerationButton").innerHTML = "Click for Next Generation of counties";
 }
 
+function addCounty(countyGraphic) {
+	var initialCountyStatus = Math.round(Math.random());
+	var countyGraphicForMap = new esri.Graphic(countyGraphic.geometry, (initialCountyStatus) ? redFillSymbol : grayFillSymbol, {
+		"id" : countyGraphic.attributes.ID,
+		"currentStatus" : initialCountyStatus
+	});
+	map.graphics.add(countyGraphicForMap);
+}
+
 function calculateNextStep() {
 	dojo.forEach(map.graphics.graphics, function(county) {
 		var numberOfActiveNeighBours = getActiveNeighbourCount(county);
@@ -104,7 +95,10 @@ function calculateNextStep() {
 
 		}
 	});
-	updateMapGraphics();
+	dojo.forEach(map.graphics.graphics, function(county) {
+		county.attributes.currentStatus = county.attributes.futureStatus;
+		county.setSymbol((county.attributes.currentStatus == 1) ? redFillSymbol : grayFillSymbol);
+	});
 }
 
 function getActiveNeighbourCount(county) {
@@ -117,11 +111,4 @@ function getActiveNeighbourCount(county) {
 
 	});
 	return numberOfActiveNeighbours;
-}
-
-function updateMapGraphics() {
-	dojo.forEach(map.graphics.graphics, function(county) {
-		county.attributes.currentStatus = county.attributes.futureStatus;
-		county.setSymbol((county.attributes.currentStatus == 1) ? redFillSymbol : grayFillSymbol);
-	});
 }
