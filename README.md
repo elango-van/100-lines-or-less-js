@@ -10,11 +10,11 @@ Best of luck!
 ![App](https://raw.github.com/Esri/100-lines-or-less-js/master/100-lines-or-less-js.png)
 
 ## Winners
-1. Realtime Collaborative Mapping (Phil Leggetter)
-2. Bees (Stan Mcshinsky)
-3. JavaScript Geotagging (ognian7)
+1. [Realtime Collaborative Mapping](http://esri.github.com/100-lines-or-less-js/realtime-collaborative-mapping/index.html) by [Phil Leggetter](https://github.com/leggetter)
+2. [Bees](http://esri.github.com/100-lines-or-less-js/bees/bees.html) by [Stan McShinsky](https://github.com/smcshinsky)
+3. [Image Geotagging](http://esri.github.com/100-lines-or-less-js/javascript_geotagging/index.html) by [Ognian Samokovliyski](https://github.com/ognian7)
 
-## View the Current Entries
+## View the Entries
 
 1. [Meet Brazil](http://esri.github.com/100-lines-or-less-js/meet_brazil/index.html) by [marcos-fedato](http://github.com/marcos-fedato)
 2. [Maps Hangman Game](http://esri.github.com/100-lines-or-less-js/hangmanmap/hangmanmap.html) by [vmachuca](http://github.com/vmachuca)
@@ -47,14 +47,12 @@ Best of luck!
 29. [Bus Race](http://esri.github.com/100-lines-or-less-js/busrace/index.html) by [tsellste](https://github.com/tsellste)
 30. [24 Seconds](http://esri.github.com/100-lines-or-less-js/24Seconds/24Seconds.htm) by [FabianoHino](https://github.com/FabianoHino)
 31. [Track Me](http://esri.github.com/100-lines-or-less-js/trackme/default.htm) by [sahalmir](https://github.com/sahalmir)
-32. [Pure JavaScript Geotagging](http://esri.github.com/100-lines-or-less-js/javascript_geotagging/index.html) by [ognian7](https://github.com/ognian7)
+32. [Image Geotagging](http://esri.github.com/100-lines-or-less-js/javascript_geotagging/index.html) by [ognian7](https://github.com/ognian7)
 33. [Maptrest](http://esri.github.com/100-lines-or-less-js/maptrest/maptrest.html) by [innopal](https://github.com/innopal)
 34. [Beer Finder](http://esri.github.com/100-lines-or-less-js/BeerFinder/BeerFinder.html) by [nrgizgun](https://github.com/nrgizgun)
 35. [Google Street View Madness](http://esri.github.com/100-lines-or-less-js/google-street-view-madness/index.html) by [Mark Laudon](https://github.com/MapsRus)
 36. [Test My Memory](http://esri.github.com/100-lines-or-less-js/TestMyMemory/testmymemory.html) by [rvangilst](https://github.com/rvangilst)
 37. [Conway Life Game](http://esri.github.com/100-lines-or-less-js/conwayGame/conwaylifegame.html) by [tonynovi](https://github.com/tonynovi)
-
-Time is up! Thanks everyone, let the judging begin.
 
 ## Contest Period
 - Starts: 9:00 AM PST Friday, Mar 8, 2013
