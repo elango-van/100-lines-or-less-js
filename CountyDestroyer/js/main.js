@@ -17,7 +17,7 @@
                 basemap: 'gray',
                 center: [-89.22383998577513, 35.80008954151037],
                 zoom: 6,
-                slider: false
+                slider: true
             }),
             score = 0,
             delay = 500,
